@@ -1,0 +1,14 @@
+import pandas as pd
+
+df = pd.read_csv('perfil_vacinadas_recife.csv', sep=';')  # Certifique-se de verificar o separador correto (; ou ,)
+
+filtro_feminino_parda_preta_maior_60 = (df['municipio'] == 'Recife') & (df['seco'] == 'Feminino') & (df['cor'] == 'Parda') | (df['cor'] == 'Preta') & (df['idade'] > 60)
+
+pessoas_recife_feminino_parda_preta_maior_60 = df[filtro_feminino_parda_preta_maior_60]
+
+filtro_abril_maio_masculino = (pd.to_datetime(df['data']) >= '2023-04-01') & (pd.to_datetime(df['data']) <= '2023-05-31') & (df['sexo'] == 'Masculino')
+
+pessoas_abril_maio_masculino = df[filtro_abril_maio_masculino]
+
+pessoas_recife_feminino_parda_preta_maior_60.to_csv('pessoas_recife_feminino_parda_preta_maior_60.csv', index=False)
+pessoas_abril_maio_masculino.to_csv('pessoas_abril_maio_masculino.csv', index=False)
